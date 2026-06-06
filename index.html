@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Barba Negra Sea Food — Mariscos frescos en Barva, Heredia. El sabor del mar en el corazón de Costa Rica. Mar–Dom 12pm–8:45pm.">
+    <meta name="theme-color" content="#0B1D2E">
+    <title>Barba Negra Sea Food | Barva, Heredia</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ================================================
+           DESIGN TOKENS
+        ================================================ */
+        :root {
+            --navy:       #0B1D2E;
+            --navy-mid:   #0F2337;
+            --navy-light: #162F45;
+            --gold:       #C9A84C;
+            --gold-light: #DFC070;
+            --white:      #F5F0E8;
+            --muted:      #7A8FA0;
+            --green-wa:   #25D366;
+
+            --font-h: 'Cormorant Garamond', Georgia, serif;
+            --font-b: 'DM Sans', system-ui, sans-serif;
+
+            --nav-h:   72px;
+            --py:      clamp(4rem, 8vw, 6.5rem);
+            --wrap:    min(1200px, 100% - 2.5rem);
+            --ease:    cubic-bezier(0.16, 1, 0.3, 1);
+            --bounce:  cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* ================================================
+           RESET
+        ================================================ */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html  { scroll-behavior: smooth; }
+        body  {
+            font-family: var(--font-b);
+            background: var(--navy);
+            color: var(--white);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        img   { max-width: 100%; display: block; }
+        a     { color: inherit; text-decoration: none; }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+        }
+
+        /* ================================================
+           TYPOGRAPHY HELPERS
+        ================================================ */
+        h1, h2, h3, h4 { font-family: var(--font-h); line-height: 1.1; }
+
+        .label {
+            display: block;
+            font-size: .7rem;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 500;
+            margin-bottom: .6rem;
+        }
+        .title {
+            font-size: clamp(2.1rem, 4vw, 3.4rem);
+            font-weight: 600;
+            line-height: 1.1;
+        }
+        .gold-bar {
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: var(--gold);
+            margin: 1rem 0 1.75rem;
+        }
+        .gold-bar.center { margin-left: auto; margin-right: auto; }
+        .text-center { text-align: center; }
+
+        /* ================================================
+           ANIMATIONS
+        ================================================ */
+        @keyframes bounceY {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(8px); }
+        }
+        @keyframes pulseRing {
+            0%   { transform: scale(1);   opacity: .8; }
+            100% { transform: scale(1.55); opacity: 0;  }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity .65s var(--ease), transform .65s var(--ease);
+        }
+        .reveal.in { opacity: 1; transform: translateY(0); }
+
+        .d1 { transition-delay: .10s; }
+        .d2 { transition-delay: .18s; }
+        .d3 { transition-delay: .26s; }
+        .d4 { transition-delay: .34s; }
+        .d5 { transition-delay: .42s; }
+        .d6 { transition-delay: .50s; }
+
+        /* ================================================
+           LAYOUT HELPERS
+        ================================================ */
+        .section { padding: var(--py) 1.25rem; }
+        .wrap    { max-width: var(--wrap); margin: 0 auto; }
+        .sh      { margin-bottom: 2.75rem; } /* section header */
+
+        /* ================================================
+           BUTTONS
+        ================================================ */
+        .btn {
+            display: inline-block;
+            padding: .78rem 1.65rem;
+            font-size: .875rem;
+            font-weight: 600;
+            letter-spacing: .04em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background .22s, color .22s, border-color .22s, transform .2s;
+        }
+        .btn-gold {
+            background: var(--gold);
+            color: var(--navy);
+        }
+        .btn-gold:hover  { background: var(--gold-light); transform: translateY(-1px); }
+
+        .btn-outline {
+            border: 1.5px solid rgba(245,240,232,.35);
+            color: var(--white);
+        }
+        .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* ================================================
+           NAVBAR
+        ================================================ */
+        .nav {
+            position: fixed;
+            inset: 0 0 auto;
+            z-index: 100;
+            height: var(--nav-h);
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+            transition: background .4s, backdrop-filter .4s, box-shadow .4s;
+        }
+        .nav.scrolled {
+            background: rgba(11,29,46,.93);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 1px 0 rgba(201,168,76,.15);
+        }
+        .nav-inner {
+            max-width: var(--wrap);
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+        .nav-logo img {
+            height: 46px;
+            width: auto;
+            filter: invert(1) brightness(10);
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.75rem;
+            list-style: none;
+        }
+        .nav-links a {
+            font-size: .83rem;
+            font-weight: 500;
+            letter-spacing: .04em;
+            color: var(--white);
+            opacity: .8;
+            transition: opacity .2s, color .2s;
+        }
+        .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+        .nav-cta {
+            padding: .48rem 1.2rem;
+            border: 1.5px solid var(--gold);
+            border-radius: 4px;
+            font-size: .83rem;
+            font-weight: 500;
+            color: var(--gold);
+            letter-spacing: .04em;
+            transition: background .22s, color .22s;
+            white-space: nowrap;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .nav-cta:hover { background: var(--gold); color: var(--navy); }
+
+        /* hamburger */
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            padding: 8px;
+            cursor: pointer;
+        }
+        .burger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--white);
+            border-radius: 2px;
+            transition: transform .3s, opacity .3s;
+        }
+        .burger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+        .burger.open span:nth-child(2) { opacity: 0; }
+        .burger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+        /* mobile drawer */
+        .mob-menu {
+            position: fixed;
+            top: var(--nav-h);
+            inset-inline: 0;
+            background: rgba(11,29,46,.97);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 1.5rem 2rem 2.5rem;
+            z-index: 99;
+            border-top: 1px solid rgba(201,168,76,.18);
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            transform: translateY(-6px);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform .3s var(--ease), opacity .3s;
+        }
+        .mob-menu.open { transform: translateY(0); opacity: 1; pointer-events: all; }
+        .mob-menu a { font-size: 1.1rem; font-weight: 500; color: var(--white); padding: .2rem 0; }
+        .mob-menu .nav-cta { display: inline-block; text-align: center; margin-top: .4rem; }
+
+        @media (max-width: 800px) {
+            .nav-links, .nav-cta.desk { display: none; }
+            .burger { display: flex; }
+        }
+
+        /* ================================================
+           HERO
+        ================================================ */
+        .hero {
+            min-height: 100svh;
+            display: grid;
+            grid-template-columns: 45fr 55fr;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: calc(var(--nav-h) + 3rem) 3rem 4rem;
+            background: var(--navy);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            background: rgba(201,168,76,.10);
+            border: 1px solid rgba(201,168,76,.28);
+            border-radius: 100px;
+            padding: .38rem 1rem;
+            font-size: .78rem;
+            font-weight: 500;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            width: fit-content;
+        }
+        .hero-badge svg { width: 13px; height: 13px; fill: var(--gold); flex-shrink: 0; }
+
+        .hero-title {
+            font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+            font-weight: 600;
+            line-height: 1.08;
+            margin-bottom: 1.1rem;
+        }
+        .hero-title em { font-style: italic; color: var(--gold); }
+
+        .hero-sub {
+            font-size: .96rem;
+            color: var(--muted);
+            line-height: 1.65;
+            max-width: 380px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-btns { display: flex; flex-wrap: wrap; gap: .85rem; margin-bottom: 2.5rem; }
+
+        .hero-scroll { display: flex; flex-direction: column; align-items: flex-start; gap: .4rem; }
+        .hero-scroll small { font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+        .chevron { animation: bounceY 1.9s ease-in-out infinite; color: var(--gold); }
+        .chevron svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+        .hero-img {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+        .hero-img::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, var(--navy) 0%, transparent 45%);
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                position: relative;
+            }
+            .hero-img {
+                position: absolute;
+                inset: 0;
+                z-index: 0;
+            }
+            .hero-img::before {
+                background: linear-gradient(to top, rgba(11,29,46,.97) 0%, rgba(11,29,46,.7) 55%, rgba(11,29,46,.35) 100%);
+            }
+            .hero-content {
+                position: relative;
+                z-index: 1;
+                padding: calc(var(--nav-h) + 2rem) 1.5rem 3rem;
+                justify-content: flex-end;
+                min-height: 100svh;
+            }
+        }
+
+        /* ================================================
+           PLATOS DESTACADOS — BENTO GRID
+        ================================================ */
+        .bento-section { background: var(--navy-mid); }
+
+        .bento {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: 210px;
+            gap: 10px;
+        }
+        .bc {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .bc img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform .6s var(--ease);
+        }
+        .bc:hover img { transform: scale(1.07); }
+        .bc::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(11,29,46,.88) 0%, transparent 55%);
+            z-index: 1;
+        }
+        .bc-name {
+            position: absolute;
+            bottom: 1rem; left: 1.2rem;
+            z-index: 2;
+            font-family: var(--font-h);
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+        /* layout */
+        .bc1 { grid-column: span 5; grid-row: span 2; }
+        .bc2 { grid-column: span 7; grid-row: span 2; }
+        .bc3 { grid-column: span 4; grid-row: span 2; }
+        .bc4 { grid-column: span 4; grid-row: span 2; }
+        .bc5 { grid-column: span 4; grid-row: span 2; }
+        .bc6 { grid-column: span 6; grid-row: span 2; }
+        .bc7 { grid-column: span 6; grid-row: span 2; }
+
+        @media (max-width: 900px) {
+            .bento { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
+            .bc1,.bc2,.bc3,.bc4,.bc5,.bc6,.bc7 { grid-column: span 1; grid-row: span 1; }
+            .bc1 { grid-column: span 2; grid-row: span 2; }
+        }
+        @media (max-width: 480px) {
+            .bento { grid-template-columns: 1fr; grid-auto-rows: 220px; }
+            .bc1 { grid-column: span 1; grid-row: span 1; }
+        }
+
+        /* ================================================
+           MENÚ COMPLETO — TABS
+        ================================================ */
+        .menu-section { background: var(--navy); }
+
+        .tab-bar-wrap {
+            overflow-x: auto;
+            scrollbar-width: none;
+            margin-bottom: 2.25rem;
+            padding-bottom: 2px;
+        }
+        .tab-bar-wrap::-webkit-scrollbar { display: none; }
+
+        .tab-bar {
+            display: flex;
+            border-bottom: 1px solid rgba(122,143,160,.18);
+            width: max-content;
+            min-width: 100%;
+        }
+        .tab-btn {
+            padding: .62rem 1.2rem;
+            font-size: .8rem;
+            font-weight: 500;
+            color: var(--muted);
+            letter-spacing: .04em;
+            border-bottom: 2px solid transparent;
+            transition: color .2s, border-color .2s;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .tab-btn:hover  { color: var(--white); }
+        .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 1rem;
+        }
+        .mc {
+            background: var(--navy-light);
+            border: 1px solid rgba(122,143,160,.1);
+            border-radius: 8px;
+            padding: 1.2rem 1.4rem;
+            transition: border-color .25s, transform .25s;
+        }
+        .mc:hover { border-color: rgba(201,168,76,.25); transform: translateY(-2px); }
+        .mc-name {
+            font-family: var(--font-h);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: .35rem;
+        }
+        .mc-desc {
+            font-size: .8rem;
+            color: var(--muted);
+            line-height: 1.55;
+            margin-bottom: .65rem;
+            min-height: .8rem;
+        }
+        .mc-price { font-size: .83rem; font-weight: 600; color: var(--gold); }
+        .menu-note {
+            font-size: .78rem;
+            font-style: italic;
+            color: var(--muted);
+            margin-bottom: 1.25rem;
+            line-height: 1.5;
+        }
+
+        /* ================================================
+           GALERÍA — MASONRY
+        ================================================ */
+        .gallery-section { background: var(--navy-mid); }
+
+        .masonry { columns: 4; column-gap: 10px; }
+        .mi {
+            break-inside: avoid;
+            margin-bottom: 10px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .mi img { width: 100%; display: block; transition: transform .5s var(--ease); }
+        .mi:hover img { transform: scale(1.06); }
+        .mi-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(11,29,46,.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity .28s;
+        }
+        .mi:hover .mi-overlay { opacity: 1; }
+        .mi-overlay svg { width: 30px; height: 30px; stroke: var(--white); fill: none; stroke-width: 2; }
+
+        @media (max-width: 900px) { .masonry { columns: 3; } }
+        @media (max-width: 600px) { .masonry { columns: 2; } }
+
+        /* ================================================
+           HISTORIA
+        ================================================ */
+        .historia-section { background: var(--navy); }
+
+        .historia-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .historia-text p {
+            font-size: .96rem;
+            line-height: 1.78;
+            color: var(--muted);
+            margin-bottom: 1.1rem;
+        }
+        .stats {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        .stat-v {
+            font-family: var(--font-h);
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            display: block;
+        }
+        .stat-l {
+            font-size: .73rem;
+            color: var(--muted);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+        .historia-img {
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 4/5;
+            position: relative;
+        }
+        .historia-img img { width: 100%; height: 100%; object-fit: cover; }
+        .historia-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(201,168,76,.2);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .historia-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .historia-img { aspect-ratio: 16/9; order: -1; }
+        }
+
+        /* ================================================
+           DELIVERY
+        ================================================ */
+        .delivery-section { background: var(--navy-mid); }
+
+        .delivery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+        }
+        .dc {
+            background: var(--navy-light);
+            border: 1px solid rgba(122,143,160,.1);
+            border-radius: 10px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .85rem;
+            transition: border-color .25s, transform .25s;
+        }
+        .dc:hover { border-color: rgba(201,168,76,.3); transform: translateY(-3px); }
+        .dc-icon {
+            width: 52px; height: 52px;
+            background: rgba(201,168,76,.1);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .dc-icon svg { width: 26px; height: 26px; stroke: var(--gold); fill: none; stroke-width: 1.8; }
+        .dc-name {
+            font-family: var(--font-h);
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        .dc-desc { font-size: .8rem; color: var(--muted); line-height: 1.55; }
+        .dc-btn {
+            margin-top: .35rem;
+            padding: .58rem 1.4rem;
+            background: var(--gold);
+            color: var(--navy);
+            font-weight: 600;
+            font-size: .8rem;
+            border-radius: 4px;
+            transition: background .2s;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .dc-btn:hover { background: var(--gold-light); }
+
+        /* ================================================
+           UBICACIÓN
+        ================================================ */
+        .ubicacion-section { background: var(--navy); }
+
+        .ubi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        .info-block { margin-bottom: 1.6rem; }
+        .info-lbl {
+            font-size: .68rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: .45rem;
+        }
+        .info-val { font-size: .94rem; line-height: 1.65; }
+        .info-val a { color: var(--gold); }
+        .info-val .dim { color: var(--muted); font-size: .86rem; }
+
+        .map-box {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(201,168,76,.15);
+            aspect-ratio: 16/10;
+        }
+        .map-box iframe { width: 100%; height: 100%; border: none; display: block; }
+
+        @media (max-width: 768px) {
+            .ubi-grid { grid-template-columns: 1fr; }
+            .map-box { aspect-ratio: 4/3; }
+        }
+
+        /* ================================================
+           RESERVAR
+        ================================================ */
+        .reservar-section { background: var(--navy-mid); }
+
+        .form-wrap { max-width: 640px; margin: 0 auto; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .fg { display: flex; flex-direction: column; gap: .38rem; }
+        .fg.full { grid-column: span 2; }
+        .fg label { font-size: .76rem; font-weight: 500; color: var(--muted); letter-spacing: .04em; }
+        .fg input, .fg select, .fg textarea {
+            background: var(--navy-light);
+            border: 1px solid rgba(122,143,160,.18);
+            border-radius: 6px;
+            padding: .72rem 1rem;
+            color: var(--white);
+            font-family: var(--font-b);
+            font-size: .9rem;
+            outline: none;
+            transition: border-color .2s;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--gold); }
+        .fg select option { background: var(--navy-light); }
+        .fg textarea { resize: vertical; min-height: 88px; }
+
+        .form-submit {
+            width: 100%;
+            padding: .95rem;
+            background: var(--gold);
+            color: var(--navy);
+            font-weight: 700;
+            font-size: .93rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background .22s, transform .2s;
+            margin-top: .75rem;
+            font-family: var(--font-b);
+            letter-spacing: .04em;
+        }
+        .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+        .form-note {
+            display: flex; align-items: center; justify-content: center;
+            gap: .4rem;
+            font-size: .76rem;
+            color: var(--muted);
+            margin-top: .75rem;
+            text-align: center;
+        }
+        .form-note svg { width: 14px; height: 14px; fill: var(--green-wa); flex-shrink: 0; }
+
+        @media (max-width: 520px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .fg.full { grid-column: span 1; }
+        }
+
+        /* ================================================
+           FOOTER
+        ================================================ */
+        .footer {
+            background: var(--navy);
+            border-top: 1px solid rgba(201,168,76,.18);
+            padding: 3.5rem 1.25rem 2rem;
+        }
+        .footer-inner {
+            max-width: var(--wrap);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.75rem;
+            text-align: center;
+        }
+        .footer-logo img { height: 50px; filter: invert(1) brightness(10); opacity: .8; }
+        .footer-tagline { font-family: var(--font-h); font-size: 1rem; font-style: italic; color: var(--muted); }
+
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.4rem; }
+        .footer-links a { font-size: .8rem; color: var(--muted); transition: color .2s; }
+        .footer-links a:hover { color: var(--gold); }
+
+        .footer-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(201,168,76,.28), transparent);
+        }
+        .footer-copy { font-size: .76rem; color: var(--muted); }
+        .footer-copy span { color: var(--gold); }
+
+        .socials { display: flex; gap: .85rem; }
+        .soc {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(122,143,160,.22);
+            display: flex; align-items: center; justify-content: center;
+            transition: border-color .2s, background .2s;
+            cursor: pointer;
+        }
+        .soc:hover { border-color: var(--gold); background: rgba(201,168,76,.1); }
+        .soc svg { width: 15px; height: 15px; fill: var(--muted); transition: fill .2s; }
+        .soc:hover svg { fill: var(--gold); }
+
+        /* ================================================
+           WHATSAPP FAB
+        ================================================ */
+        .wa-fab {
+            position: fixed;
+            bottom: 1.75rem; right: 1.75rem;
+            z-index: 200;
+            width: 54px; height: 54px;
+            border-radius: 50%;
+            background: var(--green-wa);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 20px rgba(37,211,102,.32);
+            cursor: pointer;
+            transition: transform .25s var(--bounce);
+        }
+        .wa-fab:hover { transform: scale(1.12); }
+        .wa-fab::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: var(--green-wa);
+            animation: pulseRing 2.2s ease-out infinite;
+        }
+        .wa-fab svg { width: 28px; height: 28px; fill: #fff; position: relative; z-index: 1; }
+    </style>
+</head>
+<body>
+
+<!-- ===================== NAVBAR ===================== -->
+<nav class="nav" id="nav" aria-label="Navegación principal">
+    <div class="nav-inner">
+        <a href="#inicio" class="nav-logo" aria-label="Barba Negra Sea Food">
+            <img src="images/logo.png" alt="Barba Negra Sea Food" loading="eager">
+        </a>
+        <ul class="nav-links" role="list">
+            <li><a href="#platos">Platos</a></li>
+            <li><a href="#menu">Menú</a></li>
+            <li><a href="#galeria">Galería</a></li>
+            <li><a href="#historia">Nosotros</a></li>
+            <li><a href="#ubicacion">Ubicación</a></li>
+        </ul>
+        <a href="#reservar" class="nav-cta desk">Reservar Mesa</a>
+        <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<div class="mob-menu" id="mob-menu" aria-label="Menú móvil">
+    <a href="#platos"    class="mob-link">Platos Destacados</a>
+    <a href="#menu"      class="mob-link">Menú Completo</a>
+    <a href="#galeria"   class="mob-link">Galería</a>
+    <a href="#historia"  class="mob-link">Nuestra Historia</a>
+    <a href="#ubicacion" class="mob-link">Ubicación</a>
+    <a href="#reservar"  class="nav-cta">Reservar Mesa</a>
+</div>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="inicio" aria-label="Portada">
+    <div class="hero-content">
+        <div class="hero-badge reveal">
+            <!-- star icon -->
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            4.9 &middot; +60 reseñas Google
+        </div>
+
+        <h1 class="hero-title reveal d1">
+            El sabor del <em>mar,</em><br>en el corazón<br>de Heredia
+        </h1>
+
+        <p class="hero-sub reveal d2">
+            Mariscos frescos &middot; Barva, Heredia &middot; Mar&ndash;Dom 12pm&ndash;8:45pm
+        </p>
+
+        <div class="hero-btns reveal d3">
+            <a href="#menu"        class="btn btn-gold">Ver Menú</a>
+            <a href="https://www.google.com/maps/search/Barva+Heredia+Costa+Rica"
+               target="_blank" rel="noopener" class="btn btn-outline">Cómo llegar</a>
+        </div>
+
+        <div class="hero-scroll reveal d4" aria-hidden="true">
+            <small>Explorar</small>
+            <div class="chevron">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-img" aria-hidden="true">
+        <img src="images/pasta-camarones.jpg" alt="" loading="eager" fetchpriority="high">
+    </div>
+</section>
+
+<!-- ===================== PLATOS DESTACADOS ===================== -->
+<section class="section bento-section" id="platos">
+    <div class="wrap">
+        <div class="sh reveal">
+            <span class="label">Lo mejor de la casa</span>
+            <h2 class="title">Platos Destacados</h2>
+            <span class="gold-bar"></span>
+        </div>
+
+        <div class="bento">
+            <div class="bc bc1 reveal">
+                <img src="images/nachos.jpg" alt="Barbanachos" loading="lazy">
+                <span class="bc-name">Barbanachos</span>
+            </div>
+            <div class="bc bc2 reveal d1">
+                <img src="images/pasta-camarones.jpg" alt="Pasta con Camarones" loading="lazy">
+                <span class="bc-name">Pasta con Camarones</span>
+            </div>
+            <div class="bc bc3 reveal d2">
+                <img src="images/pescado-frito.jpg" alt="Pescado Frito" loading="lazy">
+                <span class="bc-name">Pescado Frito</span>
+            </div>
+            <div class="bc bc4 reveal d3">
+                <img src="images/patacon.jpg" alt="Patacón Pirata" loading="lazy">
+                <span class="bc-name">Patacón Pirata</span>
+            </div>
+            <div class="bc bc5 reveal d4">
+                <img src="images/camarones-apanados.jpg" alt="Camarones al Panko" loading="lazy">
+                <span class="bc-name">Camarones al Panko</span>
+            </div>
+            <div class="bc bc6 reveal d5">
+                <img src="images/bruschettas.jpg" alt="Bruschettas de Mariscos" loading="lazy">
+                <span class="bc-name">Bruschettas de Mariscos</span>
+            </div>
+            <div class="bc bc7 reveal d6">
+                <img src="images/filete-salsa.jpg" alt="Filete en Salsa" loading="lazy">
+                <span class="bc-name">Filete en Salsa</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== MENÚ COMPLETO ===================== -->
+<section class="section menu-section" id="menu">
+    <div class="wrap">
+        <div class="sh reveal text-center">
+            <span class="label">Todo lo que ofrecemos</span>
+            <h2 class="title">Menú Completo</h2>
+            <span class="gold-bar center"></span>
+        </div>
+
+        <div class="tab-bar-wrap reveal">
+            <div class="tab-bar" role="tablist" aria-label="Categorías del menú">
+                <button class="tab-btn active" data-tab="entradas"    role="tab" aria-selected="true">Entradas</button>
+                <button class="tab-btn"         data-tab="ceviches"   role="tab" aria-selected="false">Ceviches</button>
+                <button class="tab-btn"         data-tab="platos"     role="tab" aria-selected="false">Platos Fuertes</button>
+                <button class="tab-btn"         data-tab="arroces"    role="tab" aria-selected="false">Arroces</button>
+                <button class="tab-btn"         data-tab="pastas"     role="tab" aria-selected="false">Pastas</button>
+                <button class="tab-btn"         data-tab="sopas"      role="tab" aria-selected="false">Sopas</button>
+                <button class="tab-btn"         data-tab="ensaladas"  role="tab" aria-selected="false">Ensaladas</button>
+                <button class="tab-btn"         data-tab="hambur"     role="tab" aria-selected="false">Hamburguesas</button>
+                <button class="tab-btn"         data-tab="bebidas"    role="tab" aria-selected="false">Bebidas</button>
+                <button class="tab-btn"         data-tab="adicionales"role="tab" aria-selected="false">Adicionales</button>
+            </div>
+        </div>
+
+        <!-- ENTRADAS -->
+        <div class="tab-panel active" id="tab-entradas" role="tabpanel">
+            <div class="menu-grid">
+                <div class="mc"><p class="mc-name">Patacones</p><p class="mc-desc">Con guacamol, frijoles y pico de gallo</p><p class="mc-price">&#x20A1;3,500</p></div>
+                <div class="mc"><p class="mc-name">Patacones con Mariscos</p><p class="mc-desc">Con frijoles, guacamole y mariscada al ajillo</p><p class="mc-price">&#x20A1;4,400</p></div>
+                <div class="mc"><p class="mc-name">Patacón Pirata Pollo</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;5,200</p></div>
+                <div class="mc"><p class="mc-name">Patacón Pirata Camarones</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;6,300</p></div>
+                <div class="mc"><p class="mc-name">Bruschettas de Mariscos</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;4,500</p></div>
+                <div class="mc"><p class="mc-name">Deditos de Pollo</p><p class="mc-desc">Con papas fritas</p><p class="mc-price">&#x20A1;3,700</p></div>
+                <div class="mc"><p class="mc-name">Deditos de Pescado</p><p class="mc-desc">&nbsp;</p><p class="mc-price">Consultar precio</p></div>
+                <div class="mc"><p class="mc-name">Deditos de Queso</p><p class="mc-desc">&nbsp;</p><p class="mc-price">Consultar precio</p></div>
+                <div class="mc"><p class="mc-name">Papas Fritas</p><p class="mc-desc">&nbsp;</p><p class="mc-price">Pequeñas &#x20A1;1,300 &middot; Grandes &#x20A1;2,500</p></div>
+                <div class="mc"><p class="mc-name">Canastas Rellenas de Camarón</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;4,400</p></div>
+                <div class="mc"><p class="mc-name">Mix Familiar</p><p class="mc-desc">Deditos de pollo, pescado, queso y papas fritas</p><p class="mc-price">&#x20A1;6,900</p></div>
+            </div>
+        </div>
+
+        <!-- CEVICHES -->
+        <div class="tab-panel" id="tab-ceviches" role="tabpanel">
+            <div class="menu-grid">
+                <div class="mc"><p class="mc-name">Ceviche de Pescado</p><p class="mc-desc">&nbsp;</p><p class="mc-price">Pequeño &#x20A1;3,200 &middot; Grande &#x20A1;4,500</p></div>
+                <div class="mc"><p class="mc-name">Ceviche Mixto</p><p class="mc-desc">&nbsp;</p><p class="mc-price">Pequeño &#x20A1;3,700 &middot; Grande &#x20A1;5,100</p></div>
+                <div class="mc"><p class="mc-name">Ceviche Caribeño</p><p class="mc-desc">&nbsp;</p><p class="mc-price">Pequeño &#x20A1;3,800 &middot; Grande &#x20A1;5,200</p></div>
+                <div class="mc"><p class="mc-name">Trilogía de Ceviches</p><p class="mc-desc">&nbsp;</p><p class="mc-price">Pequeño &#x20A1;3,900 &middot; Grande &#x20A1;5,500</p></div>
+            </div>
+        </div>
+
+        <!-- PLATOS FUERTES -->
+        <div class="tab-panel" id="tab-platos" role="tabpanel">
+            <p class="menu-note">Incluye 2 acompañamientos a elegir: papas fritas, papas salteadas, puré, patacones, arroz, vegetales o ensalada.</p>
+            <div class="menu-grid">
+                <div class="mc"><p class="mc-name">Camarones al Ajillo</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;7,300</p></div>
+                <div class="mc"><p class="mc-name">Camarones al Panko</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;7,300</p></div>
+                <div class="mc"><p class="mc-name">Filet de Pollo</p><p class="mc-desc">A la plancha o empanizado</p><p class="mc-price">&#x20A1;5,700</p></div>
+                <div class="mc"><p class="mc-name">Filet de Pescado</p><p class="mc-desc">A la plancha o empanizado</p><p class="mc-price">&#x20A1;6,200</p></div>
+                <div class="mc"><p class="mc-name">Filet de Pescado en Salsa Pomodoro</p><p class="mc-desc">Con mariscos</p><p class="mc-price">&#x20A1;7,700</p></div>
+                <div class="mc"><p class="mc-name">Filet de Pescado en Salsa Bechamel</p><p class="mc-desc">Con mariscos</p><p class="mc-price">&#x20A1;7,800</p></div>
+                <div class="mc"><p class="mc-name">Filet de Corvina</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;7,500</p></div>
+                <div class="mc"><p class="mc-name">Mariscada al Ajillo</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;6,200</p></div>
+                <div class="mc"><p class="mc-name">Pescado Entero</p><p class="mc-desc">&nbsp;</p><p class="mc-price">Consultar precio</p></div>
+            </div>
+        </div>
+
+        <!-- ARROCES -->
+        <div class="tab-panel" id="tab-arroces" role="tabpanel">
+            <p class="menu-note">Todos los arroces incluyen papas fritas y ensalada.</p>
+            <div class="menu-grid">
+                <div class="mc"><p class="mc-name">Arroz con Camarones</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;6,100</p></div>
+                <div class="mc"><p class="mc-name">Arroz con Calamar</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;5,100</p></div>
+                <div class="mc"><p class="mc-name">Arroz con Pollo</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;5,500</p></div>
+                <div class="mc"><p class="mc-name">Arroz con Mariscos</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;6,500</p></div>
+                <div class="mc"><p class="mc-name">Camarones con Arroz</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;7,700</p></div>
+            </div>
+        </div>
+
+        <!-- PASTAS -->
+        <div class="tab-panel" id="tab-pastas" role="tabpanel">
+            <p class="menu-note">Spaguetti o Fetuccini en salsa blanca, pomodoro o mantequilla y ajo.</p>
+            <div class="menu-grid">
+                <div class="mc"><p class="mc-name">Frutti di Mar</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;6,500</p></div>
+                <div class="mc"><p class="mc-name">Pasta con Camarones</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;6,500</p></div>
+                <div class="mc"><p class="mc-name">Pasta con Pollo</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;6,000</p></div>
+                <div class="mc"><p class="mc-name">Mantequilla, Ajo y Queso Parmesano</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;4,900</p></div>
+            </div>
+        </div>
+
+        <!-- SOPAS -->
+        <div class="tab-panel" id="tab-sopas" role="tabpanel">
+            <p class="menu-note">Todas las sopas incluyen arroz blanco.</p>
+            <div class="menu-grid">
+                <div class="mc"><p class="mc-name">Sopa de Pescado</p><p class="mc-desc">&nbsp;</p><p class="mc-price">En agua &#x20A1;4,300 &middot; En leche &#x20A1;5,100</p></div>
+                <div class="mc"><p class="mc-name">Sopa de Mariscos</p><p class="mc-desc">&nbsp;</p><p class="mc-price">En agua &#x20A1;4,800 &middot; En leche &#x20A1;5,100</p></div>
+                <div class="mc"><p class="mc-name">Sopa Caribeña</p><p class="mc-desc">&nbsp;</p><p class="mc-price">En agua &#x20A1;4,800 &middot; En leche &#x20A1;5,400</p></div>
+            </div>
+        </div>
+
+        <!-- ENSALADAS -->
+        <div class="tab-panel" id="tab-ensaladas" role="tabpanel">
+            <div class="menu-grid">
+                <div class="mc"><p class="mc-name">Ensalada Pollo a la Parrilla</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;6,200</p></div>
+                <div class="mc"><p class="mc-name">Ensalada de Pescado</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;6,200</p></div>
+                <div class="mc"><p class="mc-name">Ensalada de Camarones</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;6,600</p></div>
+            </div>
+        </div>
+
+        <!-- HAMBURGUESAS -->
+        <div class="tab-panel" id="tab-hambur" role="tabpanel">
+            <p class="menu-note">Todas las hamburguesas incluyen papas fritas.</p>
+            <div class="menu-grid">
+                <div class="mc"><p class="mc-name">Hamburguesa de Pollo</p><p class="mc-desc">BBQ o Búfalo</p><p class="mc-price">&#x20A1;5,700</p></div>
+                <div class="mc"><p class="mc-name">Hamburguesa de Pescado</p><p class="mc-desc">BBQ o Búfalo</p><p class="mc-price">&#x20A1;5,700</p></div>
+                <div class="mc"><p class="mc-name">Hamburguesa Sencilla</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;3,700</p></div>
+                <div class="mc"><p class="mc-name">Mar y Tierra</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;6,700</p></div>
+                <div class="mc"><p class="mc-name">Barbanachos</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;5,700</p></div>
+            </div>
+        </div>
+
+        <!-- BEBIDAS -->
+        <div class="tab-panel" id="tab-bebidas" role="tabpanel">
+            <div class="menu-grid">
+                <div class="mc"><p class="mc-name">Limonada Hierbabuena</p><p class="mc-desc">&nbsp;</p><p class="mc-price">Agua &#x20A1;2,100 &middot; Leche &#x20A1;2,300</p></div>
+                <div class="mc"><p class="mc-name">Limonada Sandía</p><p class="mc-desc">&nbsp;</p><p class="mc-price">Agua &#x20A1;2,100 &middot; Leche &#x20A1;2,300</p></div>
+                <div class="mc"><p class="mc-name">Limonada Sandía Hierbabuena</p><p class="mc-desc">&nbsp;</p><p class="mc-price">Agua &#x20A1;2,100 &middot; Leche &#x20A1;2,300</p></div>
+                <div class="mc"><p class="mc-name">Limonada Piña</p><p class="mc-desc">&nbsp;</p><p class="mc-price">Agua &#x20A1;2,100 &middot; Leche &#x20A1;2,300</p></div>
+                <div class="mc"><p class="mc-name">Limonada Piña Hierbabuena</p><p class="mc-desc">&nbsp;</p><p class="mc-price">Agua &#x20A1;2,100 &middot; Leche &#x20A1;2,300</p></div>
+                <div class="mc"><p class="mc-name">Limonada Mora</p><p class="mc-desc">&nbsp;</p><p class="mc-price">Agua &#x20A1;2,100 &middot; Leche &#x20A1;2,300</p></div>
+                <div class="mc"><p class="mc-name">Limonada Fresa</p><p class="mc-desc">&nbsp;</p><p class="mc-price">Agua &#x20A1;2,100 &middot; Leche &#x20A1;2,300</p></div>
+                <div class="mc"><p class="mc-name">Limonada Mango</p><p class="mc-desc">Temporada</p><p class="mc-price">Agua &#x20A1;2,100 &middot; Leche &#x20A1;2,300</p></div>
+                <div class="mc"><p class="mc-name">Gaseosas 600 ml</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;1,800</p></div>
+            </div>
+        </div>
+
+        <!-- ADICIONALES -->
+        <div class="tab-panel" id="tab-adicionales" role="tabpanel">
+            <div class="menu-grid">
+                <div class="mc"><p class="mc-name">Papas Fritas</p><p class="mc-desc">&nbsp;</p><p class="mc-price">Pequeñas &#x20A1;1,300 &middot; Grandes &#x20A1;2,500</p></div>
+                <div class="mc"><p class="mc-name">Guacamole</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;1,000</p></div>
+                <div class="mc"><p class="mc-name">Arroz Blanco</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;1,200</p></div>
+                <div class="mc"><p class="mc-name">Frijoles Molidos</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;800</p></div>
+                <div class="mc"><p class="mc-name">Pico de Gallo</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;800</p></div>
+                <div class="mc"><p class="mc-name">Orden de Vegetales</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;1,300</p></div>
+                <div class="mc"><p class="mc-name">Ensalada Temporada</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;1,200</p></div>
+                <div class="mc"><p class="mc-name">Puré</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;1,500</p></div>
+                <div class="mc"><p class="mc-name">Papas Salteadas</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;1,300</p></div>
+                <div class="mc"><p class="mc-name">Salsa Tártara</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;600</p></div>
+                <div class="mc"><p class="mc-name">Salsas</p><p class="mc-desc">&nbsp;</p><p class="mc-price">&#x20A1;500</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== GALERÍA ===================== -->
+<section class="section gallery-section" id="galeria">
+    <div class="wrap">
+        <div class="sh reveal text-center">
+            <span class="label">Nuestros platillos</span>
+            <h2 class="title">Galería</h2>
+            <span class="gold-bar center"></span>
+        </div>
+        <div class="masonry reveal">
+            <div class="mi"><img src="images/pasta-camarones.jpg"  alt="Pasta con Camarones"  loading="lazy"><div class="mi-overlay" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+            <div class="mi"><img src="images/nachos.jpg"           alt="Barbanachos"          loading="lazy"><div class="mi-overlay" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+            <div class="mi"><img src="images/pescado-frito.jpg"    alt="Pescado Frito"        loading="lazy"><div class="mi-overlay" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+            <div class="mi"><img src="images/patacon.jpg"          alt="Patacón Pirata"       loading="lazy"><div class="mi-overlay" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+            <div class="mi"><img src="images/camarones-apanados.jpg" alt="Camarones al Panko" loading="lazy"><div class="mi-overlay" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+            <div class="mi"><img src="images/bruschettas.jpg"      alt="Bruschettas"          loading="lazy"><div class="mi-overlay" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+            <div class="mi"><img src="images/filete-salsa.jpg"     alt="Filete en Salsa"      loading="lazy"><div class="mi-overlay" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+            <div class="mi"><img src="images/ensalada-pollo.jpg"   alt="Ensalada de Pollo"    loading="lazy"><div class="mi-overlay" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+            <div class="mi"><img src="images/ensalada-colorida.jpg" alt="Ensalada Colorida"   loading="lazy"><div class="mi-overlay" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+            <div class="mi"><img src="images/burger.jpg"           alt="Hamburguesa"          loading="lazy"><div class="mi-overlay" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== HISTORIA ===================== -->
+<section class="section historia-section" id="historia">
+    <div class="wrap">
+        <div class="historia-grid">
+            <div class="historia-text">
+                <span class="label reveal">Nuestra historia</span>
+                <h2 class="title reveal d1">El sabor auténtico del Caribe en Heredia</h2>
+                <span class="gold-bar reveal d2"></span>
+                <p class="reveal d2">Barba Negra Sea Food nació de la pasión por los mariscos frescos y la cocina costera. Ubicados en el corazón de Barva, Heredia, llevamos el sabor del mar directo a tu mesa con ingredientes seleccionados y recetas que respetan la tradición caribeña.</p>
+                <p class="reveal d3">Desde nuestros ceviches hasta nuestras pastas de mariscos, cada plato celebra la riqueza gastronómica de Costa Rica. También estamos en las principales apps de delivery para que nos disfrutes donde quieras.</p>
+                <div class="stats">
+                    <div class="reveal d2"><span class="stat-v">4.9</span><span class="stat-l">Calificación</span></div>
+                    <div class="reveal d3"><span class="stat-v">+60</span><span class="stat-l">Reseñas</span></div>
+                    <div class="reveal d4"><span class="stat-v">3</span><span class="stat-l">Apps Delivery</span></div>
+                    <div class="reveal d5"><span class="stat-v">6</span><span class="stat-l">Días abiertos</span></div>
+                </div>
+            </div>
+            <div class="historia-img reveal d2">
+                <img src="images/burger.jpg" alt="Hamburguesa Mar y Tierra" loading="lazy">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== DELIVERY ===================== -->
+<section class="section delivery-section" id="delivery">
+    <div class="wrap">
+        <div class="sh reveal text-center">
+            <span class="label">También a domicilio</span>
+            <h2 class="title">Pide en Delivery</h2>
+            <span class="gold-bar center"></span>
+        </div>
+        <div class="delivery-grid">
+            <!-- Uber Eats -->
+            <div class="dc reveal d1">
+                <div class="dc-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                </div>
+                <p class="dc-name">Uber Eats</p>
+                <p class="dc-desc">Entrega rápida hasta tu puerta. Pide desde la app o la web.</p>
+                <a href="https://www.ubereats.com" target="_blank" rel="noopener" class="dc-btn">Pedir ahora</a>
+            </div>
+            <!-- DiDi Food -->
+            <div class="dc reveal d2">
+                <div class="dc-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <p class="dc-name">DiDi Food</p>
+                <p class="dc-desc">Ordena con DiDi Food y recibe tu pedido en minutos.</p>
+                <a href="https://www.didi.com" target="_blank" rel="noopener" class="dc-btn">Pedir ahora</a>
+            </div>
+            <!-- Rappi -->
+            <div class="dc reveal d3">
+                <div class="dc-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+                </div>
+                <p class="dc-name">Rappi</p>
+                <p class="dc-desc">Disponibles en Rappi para disfrutar Barba Negra en casa.</p>
+                <a href="https://www.rappi.com" target="_blank" rel="noopener" class="dc-btn">Pedir ahora</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== UBICACIÓN ===================== -->
+<section class="section ubicacion-section" id="ubicacion">
+    <div class="wrap">
+        <div class="sh reveal text-center">
+            <span class="label">Encuéntranos</span>
+            <h2 class="title">Nuestra Ubicación</h2>
+            <span class="gold-bar center"></span>
+        </div>
+        <div class="ubi-grid">
+            <div>
+                <div class="info-block reveal">
+                    <p class="info-lbl">Dirección</p>
+                    <p class="info-val">
+                        Jardines del Beneficio 3C, Barva, Heredia<br>
+                        <span class="dim">Del Salón Italia 300m al este, Plaza Vila</span>
+                    </p>
+                </div>
+                <div class="info-block reveal d1">
+                    <p class="info-lbl">Horario</p>
+                    <p class="info-val">
+                        Martes &ndash; Domingo: 12:00 md &ndash; 8:45 pm<br>
+                        <span class="dim">Lunes: Cerrado</span>
+                    </p>
+                </div>
+                <div class="info-block reveal d2">
+                    <p class="info-lbl">Teléfono</p>
+                    <p class="info-val"><a href="tel:+50664110563">+506 6411-0563</a></p>
+                </div>
+                <div class="info-block reveal d3">
+                    <p class="info-lbl">WhatsApp</p>
+                    <p class="info-val">
+                        <a href="https://wa.me/50664110563" target="_blank" rel="noopener"
+                           style="color:var(--green-wa)">Escribirnos directo</a>
+                    </p>
+                </div>
+            </div>
+            <div class="map-box reveal d1">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.619!2d-84.1288!3d10.0032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa0fa3a4c2f5ea1%3A0x1a2b3c4d5e6f7a8b!2sBarva%2C+Heredia%2C+Costa+Rica!5e0!3m2!1ses!2scr!4v1700000000000!5m2!1ses!2scr"
+                    title="Mapa Barba Negra Sea Food — Barva, Heredia"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== RESERVAR ===================== -->
+<section class="section reservar-section" id="reservar">
+    <div class="wrap">
+        <div class="sh reveal text-center">
+            <span class="label">¿Listo para visitarnos?</span>
+            <h2 class="title">Reservar Mesa</h2>
+            <span class="gold-bar center"></span>
+            <p style="color:var(--muted);font-size:.9rem;margin-top:.3rem">
+                Completa el formulario y te confirmamos por WhatsApp
+            </p>
+        </div>
+        <div class="form-wrap">
+            <form id="reserva-form" novalidate>
+                <div class="form-grid">
+                    <div class="fg reveal d1">
+                        <label for="r-nombre">Nombre completo</label>
+                        <input type="text" id="r-nombre" name="nombre" placeholder="Tu nombre" required autocomplete="name">
+                    </div>
+                    <div class="fg reveal d2">
+                        <label for="r-tel">Teléfono</label>
+                        <input type="tel" id="r-tel" name="telefono" placeholder="+506 XXXX-XXXX" required autocomplete="tel">
+                    </div>
+                    <div class="fg reveal d3">
+                        <label for="r-fecha">Fecha</label>
+                        <input type="date" id="r-fecha" name="fecha" required>
+                    </div>
+                    <div class="fg reveal d4">
+                        <label for="r-hora">Hora</label>
+                        <select id="r-hora" name="hora" required>
+                            <option value="">Seleccionar hora</option>
+                            <option>12:00 pm</option><option>12:30 pm</option>
+                            <option>1:00 pm</option><option>1:30 pm</option>
+                            <option>2:00 pm</option><option>2:30 pm</option>
+                            <option>3:00 pm</option><option>3:30 pm</option>
+                            <option>4:00 pm</option><option>4:30 pm</option>
+                            <option>5:00 pm</option><option>5:30 pm</option>
+                            <option>6:00 pm</option><option>6:30 pm</option>
+                            <option>7:00 pm</option><option>7:30 pm</option>
+                            <option>8:00 pm</option>
+                        </select>
+                    </div>
+                    <div class="fg reveal d5">
+                        <label for="r-personas">Personas</label>
+                        <select id="r-personas" name="personas" required>
+                            <option value="">Número de personas</option>
+                            <option>1 persona</option><option>2 personas</option>
+                            <option>3 personas</option><option>4 personas</option>
+                            <option>5 personas</option><option>6 personas</option>
+                            <option>7+ personas</option>
+                        </select>
+                    </div>
+                    <div class="fg full reveal d6">
+                        <label for="r-nota">Nota adicional (opcional)</label>
+                        <textarea id="r-nota" name="nota" placeholder="Alergias, celebración especial, peticiones..."></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="form-submit reveal d6">
+                    Confirmar reserva por WhatsApp
+                </button>
+                <p class="form-note reveal">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    Se enviará un mensaje a WhatsApp para confirmar tu reserva
+                </p>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+    <div class="footer-inner">
+        <a href="#inicio" class="footer-logo" aria-label="Barba Negra Sea Food — inicio">
+            <img src="images/logo.png" alt="Barba Negra Sea Food">
+        </a>
+        <p class="footer-tagline">El sabor del mar, en el corazón de Heredia</p>
+
+        <div class="socials" aria-label="Redes sociales">
+            <!-- Instagram -->
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="soc" aria-label="Instagram">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <!-- Facebook -->
+            <a href="https://facebook.com" target="_blank" rel="noopener" class="soc" aria-label="Facebook">
+                <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <!-- WhatsApp -->
+            <a href="https://wa.me/50664110563" target="_blank" rel="noopener" class="soc" aria-label="WhatsApp">
+                <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </a>
+        </div>
+
+        <nav class="footer-links" aria-label="Links del footer">
+            <a href="#platos">Platos</a>
+            <a href="#menu">Menú</a>
+            <a href="#galeria">Galería</a>
+            <a href="#historia">Nosotros</a>
+            <a href="#delivery">Delivery</a>
+            <a href="#ubicacion">Ubicación</a>
+            <a href="#reservar">Reservar</a>
+        </nav>
+
+        <p style="font-size:.82rem;color:var(--muted)">
+            Mar&ndash;Dom 12:00 md&ndash;8:45 pm &nbsp;&middot;&nbsp;
+            <a href="tel:+50664110563" style="color:var(--gold)">+506 6411-0563</a>
+        </p>
+
+        <div class="footer-divider"></div>
+
+        <p class="footer-copy">
+            &copy; 2025 Barba Negra Sea Food &nbsp;&middot;&nbsp; Diseño por <span>MH Studio</span>
+        </p>
+    </div>
+</footer>
+
+<!-- ===================== WHATSAPP FAB ===================== -->
+<a href="https://wa.me/50664110563" target="_blank" rel="noopener"
+   class="wa-fab" aria-label="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+</a>
+
+<!-- ===================== JAVASCRIPT ===================== -->
+<script>
+(function () {
+    'use strict';
+
+    /* --- NAVBAR SCROLL --- */
+    const nav = document.getElementById('nav');
+    function onScroll() { nav.classList.toggle('scrolled', window.scrollY > 44); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    /* --- HAMBURGER / MOBILE MENU --- */
+    const burger   = document.getElementById('burger');
+    const mobMenu  = document.getElementById('mob-menu');
+
+    burger.addEventListener('click', function () {
+        const open = burger.classList.toggle('open');
+        burger.setAttribute('aria-expanded', open);
+        mobMenu.classList.toggle('open', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+    });
+
+    document.querySelectorAll('.mob-link, .mob-menu .nav-cta').forEach(function (link) {
+        link.addEventListener('click', function () {
+            burger.classList.remove('open');
+            mobMenu.classList.remove('open');
+            burger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        });
+    });
+
+    /* --- INTERSECTION OBSERVER (reveal animations) --- */
+    var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+            if (e.isIntersecting) {
+                e.target.classList.add('in');
+                io.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.10 });
+
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+    /* --- TABS --- */
+    var tabBtns    = document.querySelectorAll('.tab-btn');
+    var tabPanels  = document.querySelectorAll('.tab-panel');
+
+    tabBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            tabBtns.forEach(function (b) { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+            tabPanels.forEach(function (p) { p.classList.remove('active'); });
+            btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
+            var panel = document.getElementById('tab-' + btn.dataset.tab);
+            if (panel) panel.classList.add('active');
+        });
+    });
+
+    /* --- RESERVA → WHATSAPP --- */
+    document.getElementById('reserva-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var nombre   = document.getElementById('r-nombre').value.trim();
+        var tel      = document.getElementById('r-tel').value.trim();
+        var fecha    = document.getElementById('r-fecha').value;
+        var hora     = document.getElementById('r-hora').value;
+        var personas = document.getElementById('r-personas').value;
+        var nota     = document.getElementById('r-nota').value.trim();
+
+        if (!nombre || !tel || !fecha || !hora || !personas) {
+            alert('Por favor completa todos los campos obligatorios.');
+            return;
+        }
+
+        var lines = [
+            '🦞 *Reserva — Barba Negra Sea Food*',
+            '',
+            '👤 *Nombre:* ' + nombre,
+            '📞 *Teléfono:* ' + tel,
+            '📅 *Fecha:* ' + fecha,
+            '🕐 *Hora:* ' + hora,
+            '👥 *Personas:* ' + personas
+        ];
+        if (nota) lines.push('📝 *Nota:* ' + nota);
+
+        var url = 'https://wa.me/50664110563?text=' + encodeURIComponent(lines.join('\n'));
+        window.open(url, '_blank', 'noopener,noreferrer');
+    });
+
+    /* --- SMOOTH SCROLL (offset for fixed nav) --- */
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+            var id = a.getAttribute('href');
+            if (id === '#') return;
+            var target = document.querySelector(id);
+            if (!target) return;
+            e.preventDefault();
+            var top = target.getBoundingClientRect().top + window.scrollY - 72;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+        });
+    });
+}());
+</script>
+</body>
+</html>
