@@ -334,20 +334,25 @@
             .hero {
                 grid-template-columns: 1fr;
                 position: relative;
+                background-image: url('images/pasta-camarones.jpg');
+                background-size: cover;
+                background-position: center;
             }
-            .hero-img {
+            .hero::before {
+                content: '';
                 position: absolute;
                 inset: 0;
+                background: rgba(0,0,0,0.5);
                 z-index: 0;
             }
-            .hero-img::before {
-                background: linear-gradient(to top, rgba(11,29,46,.97) 0%, rgba(11,29,46,.7) 55%, rgba(11,29,46,.35) 100%);
+            .hero-img {
+                display: none;
             }
             .hero-content {
                 position: relative;
                 z-index: 1;
                 padding: calc(var(--nav-h) + 2rem) 1.5rem 3rem;
-                justify-content: flex-end;
+                justify-content: center;
                 align-items: center;
                 text-align: center;
                 min-height: 100svh;
