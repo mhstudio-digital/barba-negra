@@ -783,6 +783,54 @@
             animation: pulseRing 2.2s ease-out infinite;
         }
         .wa-fab svg { width: 28px; height: 28px; fill: #fff; position: relative; z-index: 1; }
+
+        .resenas {
+          padding: 80px 40px;
+          background-color: #0a1828;
+        }
+        .resenas-container {
+          max-width: 1100px;
+          margin: 0 auto;
+          text-align: center;
+        }
+        .resenas-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
+          margin-top: 48px;
+        }
+        .resena-card {
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 12px;
+          padding: 32px 24px;
+          text-align: left;
+        }
+        .resena-estrellas {
+          color: #C9A84C;
+          font-size: 18px;
+          margin-bottom: 16px;
+          letter-spacing: 2px;
+        }
+        .resena-texto {
+          color: #ccd6e0;
+          font-size: 15px;
+          line-height: 1.7;
+          margin-bottom: 20px;
+        }
+        .resena-autor {
+          color: #C9A84C;
+          font-size: 13px;
+          font-weight: 500;
+        }
+        @media (max-width: 768px) {
+          .resenas-grid {
+            grid-template-columns: 1fr;
+          }
+          .resenas {
+            padding: 60px 20px;
+          }
+        }
     </style>
 </head>
 <body>
@@ -1041,6 +1089,30 @@
             </div>
         </div>
     </div>
+</section>
+
+<section class="resenas">
+  <div class="resenas-container">
+    <p class="section-label">LO QUE DICEN NUESTROS CLIENTES</p>
+    <h2 class="section-title">Reseñas</h2>
+    <div class="resenas-grid">
+      <div class="resena-card">
+        <div class="resena-estrellas">★★★★★</div>
+        <p class="resena-texto">"Muy deliciosa la comida, un 10 en la atención. La pasta con camarones un 10/10, las hamburguesas también deliciosas. El fresco de limonada con hierbabuena de tamaño y sabor excelente."</p>
+        <p class="resena-autor">— Reseña Google · Día de las Madres</p>
+      </div>
+      <div class="resena-card">
+        <div class="resena-estrellas">★★★★★</div>
+        <p class="resena-texto">"La comida estuvo deliciosa, la atención muy buena y los tiempos para servir bien adecuados. Súper recomendado."</p>
+        <p class="resena-autor">— Jeremy Guzmán · Local Guide</p>
+      </div>
+      <div class="resena-card">
+        <div class="resena-estrellas">★★★★★</div>
+        <p class="resena-texto">"Muy rico! El arroz con camarones tenía muy buen sabor, buena porción, camarones grandes y limpios. El fresco natural era bastante grande y rico. Seguiré yendo. Recomendado!"</p>
+        <p class="resena-autor">— Shaw Martínez · Local Guide</p>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ===================== GALERÍA ===================== -->
