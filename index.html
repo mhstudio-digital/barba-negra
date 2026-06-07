@@ -253,7 +253,7 @@
         .mob-menu a { font-size: 1.1rem; font-weight: 500; color: var(--white); padding: .2rem 0; }
         .mob-menu .nav-cta { display: inline-block; text-align: center; margin-top: .4rem; }
 
-        @media (max-width: 800px) {
+        @media (max-width: 768px) {
             .nav-links, .nav-cta.desk { display: none; }
             .burger { display: flex; }
         }
@@ -348,8 +348,13 @@
                 z-index: 1;
                 padding: calc(var(--nav-h) + 2rem) 1.5rem 3rem;
                 justify-content: flex-end;
+                align-items: center;
+                text-align: center;
                 min-height: 100svh;
             }
+            .hero-badge, .hero-sub { margin-left: auto; margin-right: auto; }
+            .hero-btns { justify-content: center; }
+            .hero-scroll { align-items: center; }
         }
 
         /* ================================================
@@ -404,6 +409,10 @@
             .bc1,.bc2,.bc3,.bc4,.bc5,.bc6,.bc7 { grid-column: span 1; grid-row: span 1; }
             .bc1 { grid-column: span 2; grid-row: span 2; }
         }
+        @media (max-width: 768px) {
+            .bento { grid-template-columns: 1fr; grid-auto-rows: 220px; }
+            .bc1,.bc2,.bc3,.bc4,.bc5,.bc6,.bc7 { grid-column: span 1; grid-row: span 1; }
+        }
         @media (max-width: 480px) {
             .bento { grid-template-columns: 1fr; grid-auto-rows: 220px; }
             .bc1 { grid-column: span 1; grid-row: span 1; }
@@ -421,6 +430,18 @@
             padding-bottom: 2px;
         }
         .tab-bar-wrap::-webkit-scrollbar { display: none; }
+
+        @media (max-width: 768px) {
+            .tab-bar-wrap {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                margin-left: -1.25rem;
+                margin-right: -1.25rem;
+                padding-left: 1.25rem;
+                padding-right: 1.25rem;
+            }
+            .tab-bar { width: max-content; min-width: 100%; }
+        }
 
         .tab-bar {
             display: flex;
